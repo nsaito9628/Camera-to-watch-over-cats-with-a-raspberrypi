@@ -1,0 +1,144 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  SAM Template for name-change of mp4 file
+
+Globals:
+  Function:
+    Runtime: python3.8
+    Timeout: 5
+    MemorySize: 128
+    Architectures:
+      - arm64
+
+Parameters:
+  NameTag:
+    Type: String
+    Default: 'mimamori'
+  OrgBucketName:
+    Type: String
+    Default: 'my-mimamori-bucket'
+  Prefix:
+    Type: String
+    Default: 'emr'
+  FuncName:
+    Type: String
+    Default: 'MyMimamoriFunc'
+  Cam0:
+    Type: String
+    Default: 'bed1'
+#  Cam1:
+#    Type: String
+#    Default: ''
+#  Cam2:
+#    Type: String
+#    Default: ''
+#  Cam3:
+#    Type: String
+#    Default: ''
+
+Resources:
+  OriginS3Bucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    Properties: 
+      BucketName: !Sub ${OrgBucketName}
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: True
+        BlockPublicPolicy: True
+        IgnorePublicAcls: True
+        RestrictPublicBuckets: True
+  OriginS3BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref OriginS3Bucket
+      PolicyDocument:
+        Statement:
+          - Action: s3:GetObject
+            Effect: Allow
+            Resource: !Sub arn:aws:s3:::${OriginS3Bucket}/*
+            Principal:
+              AWS: !Sub arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${CloudFrontOriginAccessIdentity}
+  LambdaFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: function/
+      FunctionName: !Sub ${FuncName}
+      Handler: app.lambda_handler
+      Environment:
+        Variables:
+          CAM0: !Sub ${Cam0}
+#          CAM1: !Sub ${Cam1}
+#          CAM2: !Sub ${Cam2}
+#          CAM3: !Sub ${Cam3}
+          ORG_BACKET: !Sub ${OrgBucketName}
+      Policies:
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - 's3:PutObject'
+              Resource: !Sub arn:aws:s3:::${OriginS3Bucket}/*
+      Events:
+        S3Event:
+          Type: S3
+          Properties:
+            Bucket: !Ref OriginS3Bucket  # This must be the name of an S3 bucket declared in the same template file
+            Events: s3:ObjectCreated:*
+            Filter:
+              S3Key:
+                Rules:
+                - Name: prefix      # or "suffix"
+                  Value: !Sub ${Prefix}     # The value to search for in the S3 object key names
+      Role: arn:aws:iam::accountID:role/basic_lambdaexec
+      Tags:
+        Name: !Sub ${NameTag}
+  LambdaFunctionLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /aws/lambda/${LambdaFunction}
+      RetentionInDays: 7
+  CloudFrontDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Enabled: true
+        HttpVersion: http2
+        #WebACLId: arn:aws:wafv2:us-east-1:account_id:global/webacl/WAF_NAME/id
+        Origins:
+        - Id: S3Origin
+          DomainName: !Sub "${OriginS3Bucket}.s3.${AWS::Region}.amazonaws.com"
+          S3OriginConfig:
+            OriginAccessIdentity: !Sub origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}
+        DefaultRootObject: index.html
+        Comment: !Sub ${AWS::StackName} distribution
+        DefaultCacheBehavior:
+          TargetOriginId: S3Origin
+          ForwardedValues:
+            QueryString: false
+          ViewerProtocolPolicy: redirect-to-https
+          AllowedMethods:
+            - GET
+            - HEAD
+            #- "OPTIONS"
+            #- "PUT"
+            #- "PATCH"
+            #- "POST"
+            #- "DELETE"
+          # キャッシュを無効化
+          DefaultTTL: 0
+          MaxTTL: 0
+          MinTTL: 0
+        IPV6Enabled: false
+  CloudFrontOriginAccessIdentity:
+    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: !Ref AWS::StackName
+
+Outputs:
+  CloudFrontOAI:
+    Description: "StackName in OriginS3Bucket OriginAccessIdentity for 5Line Time Chart Graph"
+    Value: !Ref CloudFrontOriginAccessIdentity
+    Export:
+      Name: CFtMyMimamori

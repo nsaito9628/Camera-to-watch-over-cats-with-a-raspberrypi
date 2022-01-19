@@ -1,0 +1,16 @@
+#人検知センサーカウントをpublishするtopic
+TOPIC_MOTION=myroom/motion
+#ダストセンサーカウントをpublishするtopic
+TOPIC_DUST=myroom/dust
+#人検知センサーのNC/NOフラグ NC:0 NO:1
+SENSOR_NO=1
+#イベントレコーダーのmp4ファイルアップロード先のバケット名
+S3BUCKET=my-mimamori-bucket
+#イベントレコーダーcamera1のデータ格納先prefix名
+PREFIX_IN1=bed1
+#イベントレコーダーcamera2のデータ格納先prefix名
+PREFIX_IN2=
+#イベントレコーダーcamera3のデータ格納先prefix名
+PREFIX_IN3=
+#イベントレコーダーcamera4のデータ格納先prefix名
+PREFIX_IN4=
