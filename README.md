@@ -196,13 +196,7 @@ tableside --> PREFIX_IN4
 
 Also, you must change directory names (and S3 biucket name if needed ) in ./template/mimamori-project-deploy.sh.  
 <br>
-
-Modify template.yaml.  Replace "accountID" to your account ID at line 93.
-```sh
-sudo nano template/template.yaml
-```
-<br>
-
+  
 Deploy CloudFormation stack
 ```sh
 sam build
