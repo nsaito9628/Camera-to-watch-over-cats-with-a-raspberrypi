@@ -8,17 +8,16 @@ import parameters as para
 
 class Sensor:
     def __init__(self):
-        self.motion_pin = para.MOTION_PIN #ワークパスセンサーシグナルport : GPIO 21
-        #self.dust_PIN = para.DUST_PIN #ダストセンサー：GPIO 15
+        self.motion_pin = para.MOTION_PIN #Motion sensor signal port : GPIO 21
+        self.dust_PIN = para.DUST_PIN #Dust sensor signal port：GPIO 15
         self.sensor_no = para.SENSOR_NO
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.motion_pin, GPIO.IN)
-        #GPIO.setup(self.dust_PIN, GPIO.IN)
+        GPIO.setup(self.dust_PIN, GPIO.IN)
        
 
-    def motion_detect(self): #センサーのHI/LOを1/0で出力する
-        
-        #sig = pi.digitalRead(self.motion_pin)
+    #Output sensor HI / LO at 1/0
+    def motion_detect(self): 
 
         if self.sensor_no == 1:
             if GPIO.input(self.motion_pin) == GPIO.HIGH:
@@ -29,7 +28,8 @@ class Sensor:
         return sig
 
 
-    def motion_count(self, motion_count): #センサーがHI出力ならカウンターをインクリメントする
+    #If the sensor has HI output, increment the counter
+    def motion_count(self, motion_count):
         
         motion_sig = self.motion_detect()
         
@@ -38,31 +38,29 @@ class Sensor:
 
         return motion_count
 
-    # ダストセンサーのHIGH or LOWの時計測
 
+    #Measured when the dust sensor is HIGH or LOW 
     def pulseIn(self, start=1, end=0):
         if start==0: end = 1
         t_start = 0
         t_end = 0
-        # ECHO_PINがHIGHである時間を計測
+        # Measure the time when ECHO_PIN is HIGH
         while  GPIO.input(self.dust_PIN) == end:
-            #i= pi.digitalRead(PIN)
-            t_start = time.time()
-            #print("GPIO:",i,"start:",t_start)
-            
+            i= GPIO.input(self.dust_PIN)
+            t_start = time.time()            
         while  GPIO.input(self.dust_PIN) == start:
-            #i=pi.digitalRead(PIN)
+            i=GPIO.input(self.dust_PIN)
             t_end = time.time()
-            #print("GPIO:",i,"end:",t_end)
+
         return t_end - t_start
 
 
-    # 単位をマイクログラム/m^3に変換
+    # Convert unit to microgram / m ^ 3
     def pcs2ugm3(self, pcs):
         pi = 3.14159
-        #全粒子密度
+        #Whole grain density
         density = 1.65 * pow (10, 12)
-        #PM2.5粒子の半径
+        #Radius of PM2.5 particles
         r25 = 0.44 * pow (10, -6)
         vol25 = (4/3) * pi * pow (r25, 3)
         mass25 = density * vol25
@@ -70,21 +68,22 @@ class Sensor:
         return pcs * K * mass25
 
 
-    # pm2.5計測
+    # pm2.5 measurement
     def get_pm25(self):
         t0 = time.time()
         t = 0
-        ts = 30 #　サンプリング時間
+        ts = 30 #Sampling time
         while True:
-            # LOW状態の時間tを求める
+            # Find the time t in the LOW state
             dt = self.pulseIn(0)
             if dt<1: t = t + dt
             
             if ((time.time() - t0) > ts):
-                # LOWの割合[0-100%]
+                # Percentage of LOW [0-100%]
                 ratio = (100*t)/ts
-                #　ホコリの濃度を算出
+                #Calculate dust concentration
                 concent = 1.1 * pow(ratio,3) - 3.8 * pow(ratio,2) + 520 * ratio + 0.62         
                 dust_count = self.pcs2ugm3(concent)
+                #print(dust_count)
                 if dust_count < 0: dust_count = 0 
                 return dust_count

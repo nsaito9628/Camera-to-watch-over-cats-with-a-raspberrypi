@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
-  SAM Template for name-change of mp4 file
+  SAM Template for Camera-to-watch-over-cats-with-a-raspberrypi
 
 Globals:
   Function:
@@ -90,7 +90,7 @@ Resources:
                 Rules:
                 - Name: prefix      # or "suffix"
                   Value: !Sub ${Prefix}     # The value to search for in the S3 object key names
-      Role: arn:aws:iam::accountID:role/basic_lambdaexec
+      Role: !GetAtt LambdaFunctionRole.Arn
       Tags:
         Name: !Sub ${NameTag}
   LambdaFunctionLogGroup:
@@ -98,6 +98,65 @@ Resources:
     Properties:
       LogGroupName: !Sub /aws/lambda/${LambdaFunction}
       RetentionInDays: 7
+
+  LambdaFunctionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Action: "sts:AssumeRole"
+            Principal:
+              Service: lambda.amazonaws.com
+      Policies:
+        - PolicyName: !Sub ${FuncName}Policy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: "Allow"
+                Action:
+                  - "logs:CreateLogGroup"
+                  - "logs:CreateLogStream"
+                  - "logs:PutLogEvents"
+                Resource: 
+                  - "arn:aws:logs:*:*:*"
+              - Effect: "Allow"
+                Action:
+                  - "s3:CreateBucket"
+                  - "s3:PutBucketAcl"
+                  - "s3:PutObjectTagging"
+                  - "s3:PutObjectAcl"
+                  - "s3:PutBucketPublicAccessBlock"
+                  - "s3:PutAccountPublicAccessBlock"
+                  - "s3:ListObject"
+                  - "s3:GetObject"
+                  - "s3:PutObject"
+                  - "s3:DeleteObject"
+                  - "s3:GetBucketNotification"
+                  - "s3:PutBucketNotification"
+                  - "s3:ObjectOwnerOverrideToBucketOwner"
+                  - "s3:PutObjectRetention"
+                  - "s3:PutBucketPolicy"
+                Resource: 
+                  - "*"
+              - Effect: "Allow"
+                Action:
+                  - "cloudfront:TagResource"
+                  - "cloudfront:CreateDistributionWithTags"
+                  - "cloudfront:UpdateDistribution"
+                  - "cloudfront:CreateDistribution"
+                Resource:
+                  - "arn:aws:cloudfront::405851521300:*"
+              - Effect: "Allow"
+                Action:
+                  - "cloudfront:CreateCloudFrontOriginAccessIdentity"
+                  - "cloudfront:UpdateCloudFrontOriginAccessIdentity"
+                  - "cloudfront:GetCloudFrontOriginAccessIdentity"
+                  - "cloudfront:GetCloudFrontOriginAccessIdentityConfig"
+                Resource: 
+                  - "*"
+
   CloudFrontDistribution:
     Type: AWS::CloudFront::Distribution
     Properties:
@@ -135,10 +194,3 @@ Resources:
     Properties:
       CloudFrontOriginAccessIdentityConfig:
         Comment: !Ref AWS::StackName
-
-Outputs:
-  CloudFrontOAI:
-    Description: "StackName in OriginS3Bucket OriginAccessIdentity for 5Line Time Chart Graph"
-    Value: !Ref CloudFrontOriginAccessIdentity
-    Export:
-      Name: CFtMyMimamori

@@ -14,10 +14,8 @@ class Emr_gen:
         self.ACCESS_KEY = para.ACCESS_KEY
         self.SECRET_KEY = para.SECRET_KEY
         self.REGION = para.REGION
-        #self.CAM_NO = para.CAM_NO
-        #self.cam_No = 'emr_' + self.CAM_NO + '_'
         self.s3_bucket_name = para.S3BUCKET
-        self.s3_prefix = para.PREFIX_IN    #'video/' + self.CAM_NO + '/emr/'
+        self.s3_prefix = para.PREFIX_IN1 #change prefix_No if cam is cam1:PREFIX_IN1, elif is cam2:PREFIX_IN2, elif is cam3:PREFIX_IN3, elif is cam4:PREFIX_IN4
         self.emergency_dirpath = './emr/'
         self.filepath_timesorted = []
         
