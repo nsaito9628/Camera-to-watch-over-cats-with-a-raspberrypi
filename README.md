@@ -49,10 +49,10 @@ microSD card: 32GB or more
 ## **Development environment**
 #### **RaspberryPi**
 Kernel: Linux    
-Kernel release No.: 5.4.72-v7+  
-Kernel version: #1356 SMP Thu Oct 22 13:56:54 BST 2020  
-OS： Raspbian GNU/Linux 10 (buster)  
-Language: python 3.7.3
+Kernel release No.: 5.10.92-v8+   
+Kernel version: #1514 SMP PREEMPT Mon Jan 17 17:39:38 GMT 2022 aarch64  
+OS： Raspbian GNU/Linux 11 (bullseye)  
+Language: python 3.9.2
 #### **Windows**
 Editor: VSCode  
 VSCode expantions: Python、Pylance、MagicPython、GitLens、Git Histry、Git Graph、Markdown All in One、Excel to Markdown table  
