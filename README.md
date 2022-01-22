@@ -40,8 +40,8 @@ For detection of objects such as people：
 <br>
 
 #### **RaspberryPi**
-Hardware: armv7l  
-Model: Raspberry Pi 3 Model B Plus Rev 1.3  
+Hardware: aarch64  
+Model: Raspberry Pi 4 Model B Rev 1.2  
 microSD card: 32GB or more
 <br>
 <br />
