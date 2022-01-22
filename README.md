@@ -4,6 +4,10 @@ It is a self-made system that watches the daily life of remote families and cats
 ## **What can be done**
 The movement and dustiness (pm2.5 count) of people and pets in the installed room are displayed on the web screen at 10-minute intervals.  
 
+It can be used with the sensor monitor dashboard by deploying "System-to-watch-over-cats-with-a-raspberrypi".  
+
+When used together, the deployment order is "System-to-watch-over-cats-with-a-raspberrypi"-> "Camera-to-watch-over-cats-with-a-raspberrypi"  
+
 Data is not saved in DB 
 <br>
 <br>
@@ -58,34 +62,44 @@ SSH terminal client: TeraTerm ver. 4.105
 <br>
 
 ## **Construction procedure**
+
 ### **Preparation**
 1.  Prepare RaspberryPi OS image disc.  https://www.raspberrypi.com/software/
-2.  Register Raspberry Pi to NW connected to the Internet.
-3.  Prepare an aws account.
-4.  Prepare IAM user with 8 policies of ./user_policy and AWSIoTFullAccess attached, or IAM user with administrator authority attached so that both console login and access key can be used.  You must replace "accountID" to your accountID in 8policies.
-5.  Prepare IAM role named as "basic_lambdaexec" to resolve dependences among Resources, is Consists of AmazonS3FullAccess, CloudFrontFullAccess and AWSLambdaBasicExecutionRole.
-6. Download access key ID and secret access key.
+2.  Prepare an aws account.
+3.  Prepare IAM user with 8 custom managed policies of ./user_policy and AWSIoTFullAccess attached, or IAM user with administrator authority attached so that both console login and access key can be used. You must replace "accountID" to your accountID in 8 policies.
+4. Download access key ID and secret access key.
+5. Connect the motion sensor (if necessary) as shown in the Architecture.
+6. Insert the OS image disc into the Raspberry Pi and turn on the power.
+7. Make initial settings for Raspberry Pi and connect to the Internet.
+<br>
+<br>
 <br>
 
-### **Building an environment on Raspberry Pi**
+### **Building an commom environment on Raspberry Pi**
 Launch Raspberry Pi that can connect to the Internet.  
   
-Packages introduction
-```sh
-sudo apt update  
-sudo apt -y upgrade  
-python3 -m pip install --upgrade pip  
-sudo apt install -y postfix git docker
-sudo apt install libatlas-base-dev libjasper-dev
-sudo apt install ffmpeg  libcanberra-gtk3-module v4l-utils qv4l2 -y
-pip3 install awscli aws-sam-cli boto3 --upgrade
-pip3 install opencv-python==4.5.1.48
-
-cd /usr/bin
-sudo rm python
-sudo ln -s python3 python
-cd
+  
+Clone this project from public repository
+```sh  
+git clone https://github.com/nsaito9628/Camera-to-watch-over-cats-with-a-raspberrypi.git
 ```
+  
+Deploy a project  
+``` sh
+sudo cp ./Camera-to-watch-over-cats-with-a-raspberrypi/src/* ./*
+```
+
+Download and unpack the required packages
+```sh
+cd ..
+sudo chmod u+x environment.sh
+./environment.sh
+```
+  
+<br>
+<br>
+
+### **Used without "System-to-watch-over-cats-with-a-raspberrypi"**
   
 Set aws configuration as default profile  
 ```sh
@@ -96,25 +110,12 @@ aws configure (Replace with your own key)
     Default output format []:
 ```
   
-Clone this project from public repository
-```sh  
-git clone https://github.com/nsaito9628/Camera-to-watch-over-cats-with-a-raspberrypi.git
-```
-  
-Deploy a Python project  
-``` sh
-sudo cp ./Camera-to-watch-over-cats-with-a-raspberrypi/src/* ./*
-```
-  
 Customize parameters (if needed)  
 ``` sh
-cd cert
 sudo nano iot_prov_config
 ```
 Parameters customizable as below 
->TOPIC_MOTION (Used when installing "System-to-watch-over-cats-with-a-raspberrypi")  
-TOPIC_DUST (Used when installing "System-to-watch-over-cats-with-a-raspberrypi")  
-SENSOR_NO  
+>SENSOR_NO  
 S3BUCKET  
 PREFIX_IN1  
 PREFIX_IN2 (The value is blank when not in use)  
@@ -123,11 +124,56 @@ PREFIX_IN4 (The value is blank when not in use)
   
 Registration of RaspberryPi as a thing to IoT core and automatic startup setting
 ```sh
-sudo chmod u+x iot_prov.sh
-./iot_prov.sh
+sudo chmod u+x iot_prov_cam.sh
+./iot_prov_cam.sh
+```  
+
+<br>
+<br>
+
+### **Used with "System-to-watch-over-cats-with-a-raspberrypi"**
+
+Customize parameters (if needed)  
+``` sh
+sudo nano iot_prov_config
 ```
+Parameters customizable as below 
+>SENSOR_NO  
+S3BUCKET  
+PREFIX_IN1  
+PREFIX_IN2 (The value is blank when not in use)  
+PREFIX_IN3 (The value is blank when not in use)  
+PREFIX_IN4 (The value is blank when not in use)
   
+Registration of RaspberryPi as a thing to IoT core and automatic startup setting
+```sh
+sudo chmod u+x iot_prov_all.sh
+./iot_prov_all.sh
+```  
+<br>
+<br>
+
+### **Comment out / uncomment parameters according to the number of cameras used**
+```sh
+sudo nano parameters.py
+```  
+Comment out or uncomment lines 30 to 33.  
+```sh
+sudo nano emr_rec.py
+```  
+Change "X" of PREFIX_IN "X" on line 27 to match camera No.  
+```sh
+sudo nano emr_gen.py
+```  
+Change "X" of PREFIX_IN "X" on line 18 to match camera No.  
+
+<br>
+<br>
+
+### **Deploying SAM template on Raspberry Pi**  
+
 Rewrite to your own parameters(if needed)
+
 ```sh
 cd ../Camera-to-watch-over-cats-with-a-raspberrypi/template
 sudo nano tmplate.yaml   

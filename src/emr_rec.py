@@ -24,7 +24,7 @@ class Emr_rec:
         self.end_interval = para.end_interval
         self.output_dirpath = './tmp/'
         self.emr_dirpath = './emr/'
-        self.cam_No = 'emr_' + para.PREFIX_IN + '_'
+        self.cam_No = 'emr_' + para.PREFIX_IN1 + '_'  #change prefix_No if cam is cam1:PREFIX_IN1, elif is cam2:PREFIX_IN2, elif is cam3:PREFIX_IN3, elif is cam4:PREFIX_IN4
 
         # 保存用ディレクトリ
         os.makedirs(self.output_dirpath, exist_ok=True)
@@ -54,6 +54,7 @@ class Emr_rec:
             self.cap.set(4, self.heigth)
             self.cap.set(5, self.fps)
         else:
+            time.sleep(90)
             subprocess.call(["sudo","reboot"])
 
         #録画関数呼び出し
