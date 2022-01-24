@@ -2,7 +2,7 @@
 It is a self-made system that watches the daily life of remote families and cats with Raspberry Pi, cheap sensor, USB camera and AWS.  (日本語名：ニャンコ見守りカメラ)
 <br>
 ## **What can be done**
-The movement and dustiness (pm2.5 count) of people and pets in the installed room are displayed on the web screen at 10-minute intervals.  
+Crop the video for 15 seconds before and after the event (30 seconds in total) is detected by sensor detection or camera motion detection, and upload it to Amazon S3. event You can browse the past 12 videos on your own web site.  
 
 It can be used with the sensor monitor dashboard by deploying "System-to-watch-over-cats-with-a-raspberrypi".  
 
