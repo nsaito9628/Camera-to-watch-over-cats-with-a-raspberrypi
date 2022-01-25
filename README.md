@@ -75,7 +75,7 @@ SSH terminal client: TeraTerm ver. 4.105
 <br>
 <br>
 
-### **Building an commom environment on Raspberry Pi**
+### **Building an common environment on Raspberry Pi**
 Launch Raspberry Pi that can connect to the Internet.  
   
   
