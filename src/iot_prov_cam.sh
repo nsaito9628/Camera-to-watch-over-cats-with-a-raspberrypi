@@ -5,7 +5,7 @@ sudo apt install jq -y
 sudo apt update -y
 sudo apt upgrade -y
 
-crontab -r
+#crontab -r
 
 # creating cron_mod.conf
 echo >> ./cron_mod.conf
@@ -99,5 +99,4 @@ if [[ $(cat ./iot_prov_config | grep PREFIX_IN4 | awk -F'=' '{print $2}') != "" 
     : #pass
     fi
 
-echo crontab ./cron_mod.conf
 crontab ./cron_mod.conf
