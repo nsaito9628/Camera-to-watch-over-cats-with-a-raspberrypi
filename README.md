@@ -226,7 +226,6 @@ Confirm message like "Successfully created/updated stack - any-stack-name in ap-
 <br>
 Deploy web page on S3 
 ```sh
-cd /home/pi/Camera-to-watch-over-cats-with-a-raspberrypi/template
 sudo chmod u+x mimamori-project-deploy.sh
 ./mimamori-project-deploy.sh
 ```
