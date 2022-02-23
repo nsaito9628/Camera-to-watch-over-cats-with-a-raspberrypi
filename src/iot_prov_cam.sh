@@ -43,7 +43,8 @@ if [[ $(cat ./iot_prov_config | grep PREFIX_IN4 | awk -F'=' '{print $2}') != "" 
     else
     : #pass
     fi
-
+echo >> ./cron_mod.conf
+sudo bash -c "echo @reboot . /home/pi/.profile >> cron_mod.conf"
 echo >> ./cron_mod.conf
 if [ ! -e /home/pi/overclock.sh ]; then
     echo

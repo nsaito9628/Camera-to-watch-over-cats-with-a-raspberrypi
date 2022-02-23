@@ -94,7 +94,11 @@ Download and unpack the required packages
 sudo chmod u+x environment.sh
 ./environment.sh
 ```
-  
+Postfix config chooses local setting and using the default email address.
+<br />
+<img src="img/postfix_config1.PNG">  
+<img src="img/postfix_config2.PNG">
+<br />
 <br>
 <br>
 
