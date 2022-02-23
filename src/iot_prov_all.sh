@@ -66,6 +66,9 @@ if [ ! -e /home/pi/emr_rec.py ]; then
     echo @reboot python /home/pi/emr_rec.py >> cron_mod.conf
     fi
 
+sudo bash -c "echo >> ../../boot/config.txt"
+sudo bash -c  "echo over_voltage=2 >> ../../boot/config.txt"
+sudo bash -c  "echo arm_freq=1750 >> ../../boot/config.txt"
 
 # adding .profile
 echo >> .profile

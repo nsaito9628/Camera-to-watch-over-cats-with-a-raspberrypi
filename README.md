@@ -102,12 +102,14 @@ sudo chmod u+x environment.sh
   
 Set aws configuration as default profile  
 ```sh
-aws configure (Replace with your own key)  
-    AWS Access Key ID[]: your Access Key ID
-    AWS Secret Access Key []: your Secret Access Key
-    Default region name []: ap-northeast-1
-    Default output format []:
-```
+aws configure
+```  
+>(Replace with your own key)  
+AWS Access Key ID[]: your Access Key ID  
+AWS Secret Access Key []: your Secret Access Key  
+Default region name []: ap-northeast-1  
+Default output format []:
+
   
 Customize parameters (if needed)  
 ``` sh
