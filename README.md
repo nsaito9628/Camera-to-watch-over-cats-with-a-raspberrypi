@@ -175,7 +175,7 @@ Rewrite to your own parameters(if needed)
 
 ```sh
 cd ../Camera-to-watch-over-cats-with-a-raspberrypi/template
-sudo nano tmplate.yaml   
+sudo nano template.yaml
 ```
 Parameters customizable as below  
 >NameTag  
