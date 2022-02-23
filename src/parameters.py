@@ -41,10 +41,10 @@ PREFIX_IN1 = os.environ['PREFIX_IN1']
 # 4: 1280×960
 #####################################
 res = 2 #Default resolution setting 2
-resos = ([176, 144, 135, 30, 0.7],
-         [320, 240, 230, 30, 1.3], 
-         [640, 480, 470, 30, 2], 
-         [800, 600, 585, 20, 2.2], 
+resos = ([176, 144, 135, 25, 0.7],
+         [320, 240, 230, 20, 1.3], 
+         [640, 480, 470, 15, 2], 
+         [800, 600, 585, 10, 2.2], 
          [1280, 720, 680, 5, 3.5])#Resolution / recording rate / caption position
 
 #image Threshold when setting differential motion detection as trigger
