@@ -89,10 +89,6 @@ Deploy a project
 cp -r ./Camera-to-watch-over-cats-with-a-raspberrypi/src/* ~
 ```
 
-select editor use  
-```sh
-crontab -e
-```
 Download and unpack the required packages  
 ```sh
 sudo chmod u+x environment.sh

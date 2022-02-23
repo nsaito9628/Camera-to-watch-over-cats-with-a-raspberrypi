@@ -4,7 +4,7 @@ sudo apt update
 sudo apt -y upgrade
 python3 -m pip install --upgrade pip  
 sudo apt install -y postfix git docker awscli
-sudo apt install libatlas-base-dev libjasper-dev
+sudo apt install libatlas-base-dev libjasper-dev -y
 sudo apt install ffmpeg  libcanberra-gtk3-module v4l-utils qv4l2 -y
 pip3 install paho-mqtt boto3 --upgrade
 sudo pip3 install awscli aws-sam-cli --upgrade
