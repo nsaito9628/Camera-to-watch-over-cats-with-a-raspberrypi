@@ -59,17 +59,20 @@ if [ ! -e /home/pi/emr_rec.py ]; then
     echo @reboot python /home/pi/emr_rec.py >> ./cron_mod.conf
     fi
 
+sudo bash -c "echo >> ../../boot/config.txt"
+sudo bash -c  "echo over_voltage=2 >> ../../boot/config.txt"
+sudo bash -c  "echo arm_freq=1750 >> ../../boot/config.txt"
 
 # adding .profile
 echo >> ./.profile
-echo HOST_ENDPOINT="dummy" >> ./.profile
-echo CACERT="dummy" >> ./.profile
-echo CLIENTCERT="dummy" >> ./.profile
-echo CLIENTKEY="dummy" >> ./.profile
-echo >> ./.profile
-echo TOPIC_MOTION="dummy" >> ./.profile
-echo TOPIC_DUST="dummy" >> ./.profile
-echo >> ./.profile
+echo export HOST_ENDPOINT="dummy" >> ./.profile
+echo export CACERT="dummy" >> ./.profile
+echo export CLIENTCERT="dummy" >> ./.profile
+echo export CLIENTKEY="dummy" >> ./.profile
+echo export >> ./.profile
+echo export TOPIC_MOTION="dummy" >> ./.profile
+echo export TOPIC_DUST="dummy" >> ./.profile
+echo export >> ./.profile
 echo export ACCESS_KEY=$(cat ./.aws/credentials | grep aws_access_key_id | awk -F'= ' '{print $2}') >> ./.profile
 echo export SECRET_KEY=$(cat ./.aws/credentials | grep aws_secret_access_key | awk -F'= ' '{print $2}') >> ./.profile
 echo export REGION=$(cat ./.aws/config | grep region | awk -F'= ' '{print $2}') >> ./.profile
