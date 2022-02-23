@@ -47,7 +47,13 @@ if [[ $(cat ./iot_prov_config | grep PREFIX_IN4 | awk -F'=' '{print $2}') != "" 
     fi
 
 echo >> cron_mod.conf
-echo @reboot sudo sh /home/pi/overclock.sh >> cron_mod.conf
+sudo bash -c "echo @reboot . /home/pi/.profile >> cron_mod.conf"
+echo >> cron_mod.conf
+if [ ! -e /home/pi/overclock.sh ]; then
+    echo
+    else 
+    echo @reboot sudo sh /home/pi/overclock.sh >> ./cron_mod.conf
+    fi
 echo >> cron_mod.conf
 sudo bash -c "echo @reboot . /home/pi/.profile >> cron_mod.conf"
 if [ ! -e /home/pi/motion_detect.py ]; then

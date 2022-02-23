@@ -1,7 +1,7 @@
 #!/bin/bash
 
-sudo apt update  
-sudo apt -y upgrade  
+sudo apt update
+sudo apt -y upgrade
 python3 -m pip install --upgrade pip  
 sudo apt install -y postfix git docker awscli
 sudo apt install libatlas-base-dev libjasper-dev
