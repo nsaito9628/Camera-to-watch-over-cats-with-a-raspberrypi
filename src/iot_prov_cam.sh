@@ -101,3 +101,4 @@ if [[ $(cat ./iot_prov_config | grep PREFIX_IN4 | awk -F'=' '{print $2}') != "" 
     fi
 
 crontab ./cron_mod.conf
+
