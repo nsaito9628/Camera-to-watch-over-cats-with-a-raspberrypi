@@ -230,7 +230,7 @@ sam deploy --guided --capabilities CAPABILITY_NAMED_IAM
 
 Confirm message like "Successfully created/updated stack - any-stack-name in ap-northeast-1"  
 <br>
-Deploy web page on S3 
+Deploy web page project on S3 
 ```sh
 sudo chmod u+x mimamori-project-deploy.sh
 ./mimamori-project-deploy.sh
@@ -246,6 +246,7 @@ Select trigger for event recording
 cd ..
 sudo nano emr_rec.py
 ```
+The initial setting of trigger is motion detection.  
 When setting the logic signal of the sensor to trigger, uncomment lines 79 and 89 then comment out lines 80 and 90.  
 <br />
 <img src="img/commentout_motion_detect.PNG">
