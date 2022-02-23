@@ -73,8 +73,8 @@ if [ ! -e /home/pi/emr_rec.py ]; then
     fi
 
 sudo bash -c "echo >> ../../boot/config.txt"
-sudo bash -c  "echo over_voltage=2 >> ../../boot/config.txt"
-sudo bash -c  "echo arm_freq=1750 >> ../../boot/config.txt"
+sudo bash -c  "echo over_voltage=6 >> ../../boot/config.txt"
+sudo bash -c  "echo arm_freq=2000 >> ../../boot/config.txt"
 
 # adding .profile
 echo >> .profile
