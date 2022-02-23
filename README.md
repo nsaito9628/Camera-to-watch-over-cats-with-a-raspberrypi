@@ -40,7 +40,7 @@ For detection of objects such as people：
 <br>
 
 #### **RaspberryPi**
-Hardware: aarch64  
+Hardware: BCM2711  
 Model: Raspberry Pi 4 Model B Rev 1.2  
 microSD card: 32GB or more
 <br>
@@ -49,8 +49,8 @@ microSD card: 32GB or more
 ## **Development environment**
 #### **RaspberryPi**
 Kernel: Linux    
-Kernel release No.: 5.10.92-v8+   
-Kernel version: #1514 SMP PREEMPT Mon Jan 17 17:39:38 GMT 2022 aarch64  
+Kernel release No.: 5.10.92-v7l+   
+Kernel version: #1514 SMP Mon Jan 17 17:38:03 GMT 2022 armv7l  
 OS： Raspbian GNU/Linux 11 (bullseye)  
 Language: python 3.9.2
 #### **Windows**
