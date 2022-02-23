@@ -86,7 +86,7 @@ git clone https://github.com/nsaito9628/Camera-to-watch-over-cats-with-a-raspber
   
 Deploy a project  
 ``` sh
-sudo cp ./Camera-to-watch-over-cats-with-a-raspberrypi/src/* ./*
+cp -r ./Camera-to-watch-over-cats-with-a-raspberrypi/src/* ~
 ```
 
 Download and unpack the required packages
