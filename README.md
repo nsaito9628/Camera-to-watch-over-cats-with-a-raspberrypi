@@ -201,8 +201,9 @@ Deploy CloudFormation stack
 ```sh
 sam build
 sam deploy --guided --capabilities CAPABILITY_NAMED_IAM
+```
 
-    #Enter any stack name and [Y/N]  
+>#Enter any stack name and [Y/N]  
         Stack Name [sam-app]: any-stack-name  
         AWS Region [ap-northeast-1]:  
         Parameter NameTag [mimamori]:  
@@ -220,7 +221,7 @@ sam deploy --guided --capabilities CAPABILITY_NAMED_IAM
         ・  
         ・  
         Deploy this changeset? [y/N]: y
-```
+
 Confirm message like "Successfully created/updated stack - any-stack-name in ap-northeast-1"  
 
 Open a web page with CloudFront URL
