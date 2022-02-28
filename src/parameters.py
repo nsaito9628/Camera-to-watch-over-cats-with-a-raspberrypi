@@ -12,6 +12,10 @@ CACERT = os.environ['CACERT']  # root ca
 CLIENTCERT = os.environ['CLIENTCERT']  # certificate
 CLIENTKEY = os.environ['CLIENTKEY']  # private key
 TOPIC_MOTION = os.environ['TOPIC_MOTION']  # topic
+TOPIC_SENSOR1 = os.environ['TOPIC_SENSOR1']  # topic
+#TOPIC_SENSOR2 = os.environ['TOPIC_SENSOR2']
+#TOPIC_SENSOR3 = os.environ['TOPIC_SENSOR3']
+#TOPIC_SENSOR4 = os.environ['TOPIC_SENSOR4']
 TOPIC_DUST = os.environ['TOPIC_DUST']  # topic
 
 MOTION_PIN = 21

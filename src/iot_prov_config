@@ -9,6 +9,11 @@ THING_NAME=mimamori_pi
 #
 #Topic to publish human detection sensor count
 TOPIC_MOTION=myroom/motion
+#Topic to publish human detection sensor count for serverless graph
+TOPIC_SENSOR1=myroom/sensor1
+TOPIC_SENSOR2=
+TOPIC_SENSOR3=
+TOPIC_SENSOR4=
 #Topic to publish dust sensor count
 TOPIC_DUST=myroom/dust
 # NC / NO flag of human detection sensor NC:0 NO:1
