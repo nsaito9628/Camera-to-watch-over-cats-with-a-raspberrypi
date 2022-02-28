@@ -100,10 +100,7 @@ Postfix config chooses local setting and using the default email address.
 <img src="img/postfix_config2.PNG">
 <br />
 <br>
-<br>
 
-### **Used without "System-to-watch-over-cats-with-a-raspberrypi"**
-  
 Set aws configuration as default profile  
 ```sh
 aws configure
@@ -112,8 +109,12 @@ aws configure
 AWS Access Key ID[]: your Access Key ID  
 AWS Secret Access Key []: your Secret Access Key  
 Default region name []: ap-northeast-1  
-Default output format []:
+Default output format []:  
 
+<br>
+<br>
+
+### **Used without "System-to-watch-over-cats-with-a-raspberrypi"**
   
 Customize parameters (if needed)  
 ``` sh
@@ -152,12 +153,33 @@ PREFIX_IN4 (The value is blank when not in use)
   
 Registration of RaspberryPi as a thing to IoT core and automatic startup setting
 ```sh
-sudo chmod u+x iot_prov_all.sh
-./iot_prov_all.sh
+sudo chmod u+x iot_prov_cloudwatch.sh
+./iot_prov_cloudwatch.sh
 ```  
 <br>
 <br>
 
+### **Used with "Watch-sensor-graph-using-Pandas-Bokeh"**
+
+Customize parameters (if needed)  
+``` sh
+sudo nano iot_prov_config
+```
+Parameters customizable as below 
+>SENSOR_NO  
+S3BUCKET  
+PREFIX_IN1  
+PREFIX_IN2 (The value is blank when not in use)  
+PREFIX_IN3 (The value is blank when not in use)  
+PREFIX_IN4 (The value is blank when not in use)
+  
+Registration of RaspberryPi as a thing to IoT core and automatic startup setting
+```sh
+sudo chmod u+x iot_prov_serverless.sh
+./iot_prov_serverless.sh
+```  
+<br>
+<br>
 ### **Comment out / uncomment parameters according to the number of cameras used**
 ```sh
 sudo nano parameters.py
