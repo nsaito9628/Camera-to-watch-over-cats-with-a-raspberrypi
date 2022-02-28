@@ -8,7 +8,8 @@ sudo apt upgrade -y
 crontab -r
 
 #THING NAME (is same as Project Name)
-THING_NAME=$(cat ./iot_prov_config | grep THING_NAME | awk -F'=' '{print $2}')
+#THING_NAME=$(cat ./iot_prov_config | grep THING_NAME | awk -F'=' '{print $2}')
+THING_NAME=$(cat ./Watch-sensor-graph-using-Pandas-Bokeh/src/cert/iot_prov_config | grep THING_NAME | awk -F'=' '{print $2}')
 
 # creating cron_mod.conf
 echo HOST_ENDPOINT=$(jq -r '.endpointAddress' < ./cert/end_point.json) >> cron_mod.conf
