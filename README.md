@@ -180,6 +180,7 @@ sudo chmod u+x iot_prov_serverless.sh
 ```  
 <br>
 <br>
+
 ### **Comment out / uncomment parameters according to the number of cameras used**
 ```sh
 sudo nano parameters.py
