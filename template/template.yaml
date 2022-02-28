@@ -194,3 +194,8 @@ Resources:
     Properties:
       CloudFrontOriginAccessIdentityConfig:
         Comment: !Ref AWS::StackName
+
+Outputs:
+#DmainName
+  DomainName:
+    Value: !GetAtt CloudFrontDistribution.DomainName
